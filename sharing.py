@@ -8,7 +8,7 @@ import os
 
 #Usage:
 #./sharing.py nfs/samba path
-#Example: ./sharing.py nfs /homePool/test
+#Example: ./sharing.py nfs "/homePool/test"
 
 path = sys.argv[2]
 m = hashlib.md5()
@@ -22,16 +22,16 @@ def main():
         nfsdnew.write(output)
         nfsdnew.close
         os.system("exportfs -ra")
-        print "nfs!"
+        print "nfs"
 
     elif sys.argv[1] == "samba":
         longg = "\n[{0}-VHD]\n    path = {1}\n    public = yes\n    guest ok = yes\n    force user = nobody\n    create mask = 0777\n    directory mask = 0777".format(path.split("/")[-1],path)
         smbnew = open('/etc/samba/smb.conf', 'a+')
         smbnew.write(longg)
         os.system("service smbd restart")
-        print "samba!"
+        print "samba"
 
     else:
-        print "broken"
+        print "Please enter valid arguments"
 
 main()
